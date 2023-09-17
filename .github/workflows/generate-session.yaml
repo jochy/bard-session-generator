@@ -1,0 +1,27 @@
+name: Generate session
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  scrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+        with:
+          node-version: 20
+      
+      - name: Install dependencies
+        run: npm i
+
+      - name: Generate token
+        run: node index.js
+        env:
+          COOKIE_GOOGLE_ABUSE_EXEMPTION: ${{ secrets.COOKIE_GOOGLE_ABUSE_EXEMPTION }}
+          COOKIE_SID: ${{ secrets.COOKIE_SID }}
+          COOKIE_HSID: ${{ secrets.COOKIE_HSID }}
+          COOKIE_SSID: ${{ secrets.COOKIE_SSID }}
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+    
+    
